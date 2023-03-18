@@ -22,7 +22,7 @@ userController.list = async function(req, res) {
 	userRes = await userService.find(req);
 	console.log("userRes", userRes);
 	if(!userRes || userRes.length <= 0){
-        commonFunc.send(res, 404, {}, 'Data Not Found');
+        commonFunc.send(res, 200, {}, 'Data Not Found');
         return false;
     }
 
@@ -50,7 +50,7 @@ userController.login = async function(req, res) {
     // console.log("userRes", userRes);
 
     if(!userRes || userRes.length <= 0){
-        commonFunc.send(res, 404, {}, 'Data Not Found');
+        commonFunc.send(res, 200, {}, 'Data Not Found');
         return false;
     }
 
@@ -62,7 +62,7 @@ userController.login = async function(req, res) {
         const token = jwt.sign({ username }, 'secret_key', { expiresIn: '1h' });
         resp.data = { "token" : token };
     }else{
-        commonFunc.send(res, 404, resp, 'password not matched');
+        commonFunc.send(res, 200, resp, 'password not matched');
         return false;
     }
 
@@ -106,7 +106,7 @@ userController.getById = async function (req, res) {
     let uidata = await userService.getByUiId(req);
 
     if (!uidata) {
-        return commonFunc.send(res, 404, {}, 'Data Not Found');
+        return commonFunc.send(res, 200, {}, 'Data Not Found');
     }
     resp.data[0] = uidata;
     commonFunc.send(res, resp.code, resp.data, resp.msg);
@@ -121,7 +121,7 @@ userController.update = async function (req, res) {
     };
 
 	if (!req.params.id) {
-        commonFunc.send(res, 403, {}, 'Mandatory parameter missing id.');
+        commonFunc.send(res, 200, {}, 'Mandatory parameter missing id.');
         return;
     }
     let updateRes = await userService.updateUiData(req);
